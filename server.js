@@ -71,9 +71,21 @@ app.delete('/properties/:id', async (req, res) => {
 });
 
 // UPDATE a property
-app.put('/properties/:id', async (req, res) => {
-  const updated = await Property.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json({ success: true, property: updated });
+app.put('/properties/:id', upload.single('image'), async (req, res) => {
+  try {
+    const { title, type, price, description, status } = req.body;
+    const updates = { title, type, price, description, status };
+
+    if (req.file) {
+      updates.image = `/uploads/${req.file.filename}`;
+    }
+
+    const updated = await Property.findByIdAndUpdate(req.params.id, updates, { new: true });
+    res.json({ success: true, property: updated });
+  } catch (err) {
+    console.error("PUT Error:", err);
+    res.status(500).json({ success: false, message: "Update failed" });
+  }
 });
 
 // Start the server
