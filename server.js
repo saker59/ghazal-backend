@@ -102,9 +102,11 @@ app.post('/login', (req, res) => {
 });
 
 // ===== FRONTEND FALLBACK ROUTE (For direct links like /admin.html or /sales.html) =====
-app.get('*', (req, res) => {
+// Serve frontend only for non-API and non-upload requests
+app.get(/^\/(?!api|uploads|properties|login).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 
 // ===== START SERVER =====
 app.listen(PORT, () => {
