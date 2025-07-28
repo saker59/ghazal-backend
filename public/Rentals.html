@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GHAZAL - Rentals</title>
+  <link rel="stylesheet" href="rentals.css">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-link"><h2>GHAZAL</h2></a>
+    <nav>
+      <a href="sales.html">Sales</a>
+      <a href="construction.html">Construction</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Available Rentals</h1>
+    <p>Browse properties available for rent from GHAZAL's curated selection.</p>
+  </section>
+  <section id="filters" style="padding: 2rem;">
+  <h2 style="margin-bottom: 1rem;">Filter Rentals</h2>
+  <input type="text" id="searchTitle" placeholder="Search..." style="padding: 0.5rem; margin-right: 1rem;" />
+  <input type="number" id="minPrice" placeholder="Min Price" style="padding: 0.5rem; margin-right: 0.5rem;" />
+  <input type="number" id="maxPrice" placeholder="Max Price" style="padding: 0.5rem; margin-right: 1rem;" />
+  <button onclick="resetFilters()" style="padding: 0.5rem 1rem; background: var(--accent); color: white; border: none;">Reset</button>
+</section>
+
+  <section id="rentalProperties" class="properties-container"></section>
+  <!-- Property Detail Modal -->
+<div id="propertyModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Property Image">
+    <h2 id="modalTitle"></h2>
+    <p><strong>Price:</strong> <span id="modalPrice"></span> TND</p>
+    <p id="modalDescription"></p>
+  </div>
+</div>
+
+  <footer>
+    <p>&copy; 2025 GHAZAL. All rights reserved.</p>
+  </footer>
+
+  <script src="rentals.js"></script>
+</body>
+</html>

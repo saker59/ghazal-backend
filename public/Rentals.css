@@ -1,0 +1,152 @@
+:root {
+  --primary: #000000;
+  --accent: #D4AF37;
+  --secondary: #ffffff;
+  --text: #111111;
+  --border: #e0e0e0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+header {
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: var(--secondary);
+  margin-left: 1.5rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+.hero {
+  padding: 3rem 1rem;
+  text-align: center;
+  background-color: var(--secondary);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+.properties-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.property-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: var(--secondary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.property-card:hover {
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.property-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.property-card h3 {
+  color: var(--primary);
+  margin-top: 0.8rem;
+}
+
+footer {
+  background-color: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+#filters {
+  padding: 2rem;
+  text-align: center;
+}
+
+.filter-box {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-box input,
+.filter-box button {
+  padding: 0.5rem;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 5%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 0 15px gold;
+}
+
+.modal-content img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+    /* Style for the H2 logo link */
+  .logo-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+  /* On hover: gold color and underline */
+  .logo-link:hover {
+    color: rgba(255, 217, 0, 0.719);
+    text-decoration: underline;
+  }

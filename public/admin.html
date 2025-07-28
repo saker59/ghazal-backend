@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="admin.css">
+  <title>GHAZAL Admin Panel</title>
+</head>
+<body>
+
+  <h1>GHAZAL Admin Dashboard</h1>
+  
+  <form id="propertyForm">
+    <input type="text" id="title" placeholder="Property Title" required />
+    <input type="file" id="image" accept="image/*" required />
+    <select id="type">
+      <option value="Rental">Rental</option>
+      <option value="Sale">Sale</option>
+    </select>
+    <input type="number" id="price" placeholder="Price (TND)" required />
+    <textarea id="description" placeholder="Description..." rows="4"></textarea>
+    <button type="submit">Add Property</button>
+    <label for="status">Status:</label>
+<select id="status" required>
+  <option value="available">Available</option>
+  <option value="rented">Rented</option>
+  <option value="sold">Sold</option>
+</select>
+  </form>
+
+  <h2 style="text-align:center">Preview</h2>
+  <div class="preview" id="propertyPreview"></div>
+  <script src="admin.js"></script>
+  <div id="toast" class="toast"></div>
+</body>
+</html>

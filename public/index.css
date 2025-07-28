@@ -1,0 +1,330 @@
+:root {
+      --primary: #000000;       
+      --accent: #D4AF37;        
+      --secondary: #FFFFFF;     
+      --text: #111111;         
+      --border: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: var(--secondary);
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--secondary);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 1rem;
+      transition: opacity 0.3s;
+    }
+
+    nav a:hover {
+      opacity: 0.75;
+    }
+
+    .social-icons a {
+      margin-left: 1rem;
+      color: var(--accent);
+      font-size: 1.2rem;
+      transition: opacity 0.3s;
+    }
+
+    .social-icons a:hover {
+      opacity: 0.7;
+    }
+
+    .hero {
+      background-color: var(--secondary);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #555;
+    }
+
+    .cta-btn {
+      background-color: var(--accent);
+      color: var(--secondary);
+      padding: 0.8rem 1.8rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 2rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      background-color: #b8912f;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background-color: var(--secondary);
+    }
+
+    .service-card {
+      background-color: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      transition: box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .service-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background-color: var(--primary);
+      color: var(--secondary);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.9rem;
+      margin-top: 4rem;
+    }
+    .services a.service-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 4rem 2rem;
+  }
+
+  .services a.service-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+  }
+
+  .service-card {
+    background-color: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    flex: 1; /* Makes all cards stretch equally */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 0 10px var(--accent), 0 0 5px var(--accent);
+    border-color: var(--accent);
+    cursor: pointer;
+  }
+  :root {
+      --primary: #000000;       /* Black */
+      --accent: #D4AF37;        /* Gold */
+      --secondary: #FFFFFF;     /* White */
+      --text: #111111;          /* Darker black for body text */
+      --border: #e0e0e0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--secondary);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary);
+      color: var(--secondary);
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--secondary);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 1rem;
+      transition: opacity 0.3s;
+    }
+
+    nav a:hover {
+      opacity: 0.75;
+    }
+
+    .social-icons a {
+      margin-left: 1rem;
+      color: var(--accent);
+      font-size: 1.2rem;
+      transition: opacity 0.3s;
+    }
+
+    .social-icons a:hover {
+      opacity: 0.7;
+    }
+
+    .hero {
+      background-color: var(--secondary);
+      padding: 6rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #555;
+    }
+
+    .cta-btn {
+      background-color: var(--accent);
+      color: var(--secondary);
+      padding: 0.8rem 1.8rem;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 2rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      background-color: #b8912f;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 4rem 2rem;
+      background-color: var(--secondary);
+    }
+
+    .service-card {
+      background-color: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      transition: box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .service-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background-color: var(--primary);
+      color: var(--secondary);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.9rem;
+      margin-top: 4rem;
+    }
+     .service-card {
+    background-color: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 0 10px var(--accent), 0 0 5px var(--accent);
+    border-color: var(--accent);
+  }
+  .admin-link {
+  color: #555;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+  .admin-link:hover {
+    text-decoration: underline;
+}
+  .login-link {
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: auto; /* push it to the right in flex nav */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+
+  .login-link:hover {
+    color: gold;
+    text-decoration: underline;
+  }
+  /* ...rest of your styles... */
