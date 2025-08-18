@@ -1,24 +1,15 @@
 const rentalContainer = document.getElementById('rentalProperties');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app/";
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // ✅ no trailing slash
 
 // Fetch and render rental properties
 async function renderRentalProperties() {
   rentalContainer.innerHTML = "";
 
-async function loadRentals() {
-  try {
-    const res = await fetch(`${BACKEND_URL}/properties?type=rental`);
-    const data = await res.json();
-    console.log(data);
-  } catch (err) {
-    console.error("❌ Error loading rentals:", err);
-  }
-}
   try {
     const res = await fetch(`${BACKEND_URL}/properties?type=rental`);
     const rentalProperties = await res.json();
 
-    if (rentalProperties.length === 0) {
+    if (!Array.isArray(rentalProperties) || rentalProperties.length === 0) {
       rentalContainer.innerHTML = '<p style="text-align:center;">No rentals match your search.</p>';
       return;
     }
@@ -39,12 +30,12 @@ async function loadRentals() {
   }
 }
 
+// Filter properties by title & price (client-side)
 function filterProperties() {
   const titleQuery = document.getElementById('searchTitle').value.toLowerCase();
   const min = parseFloat(document.getElementById('minPrice').value) || 0;
   const max = parseFloat(document.getElementById('maxPrice').value) || Infinity;
 
-  // Filter current rendered properties (optional improvement: filter backend-side)
   const cards = document.querySelectorAll('.property-card');
   cards.forEach(card => {
     const title = card.querySelector('h3').innerText.toLowerCase();
@@ -65,6 +56,7 @@ function resetFilters() {
   renderRentalProperties();
 }
 
+// Modal functions
 function openModal(property) {
   document.getElementById('modalImage').src = BACKEND_URL + property.image;
   document.getElementById('modalTitle').innerText = property.title;

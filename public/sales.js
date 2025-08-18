@@ -1,6 +1,5 @@
 const salesContainer = document.getElementById('salesProperties');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app/";
-
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // ✅ no trailing slash
 
 // Fetch and render sales properties
 async function renderSalesProperties() {
@@ -10,7 +9,7 @@ async function renderSalesProperties() {
     const res = await fetch(`${BACKEND_URL}/properties?type=sale`);
     const salesProperties = await res.json();
 
-    if (salesProperties.length === 0) {
+    if (!Array.isArray(salesProperties) || salesProperties.length === 0) {
       salesContainer.innerHTML = '<p style="text-align:center;">No sales match your search.</p>';
       return;
     }
@@ -31,6 +30,7 @@ async function renderSalesProperties() {
   }
 }
 
+// Filter properties by title & price (client-side)
 function filterProperties() {
   const titleQuery = document.getElementById('searchTitle').value.toLowerCase();
   const min = parseFloat(document.getElementById('minPrice').value) || 0;
@@ -56,6 +56,7 @@ function resetFilters() {
   renderSalesProperties();
 }
 
+// Modal functions
 function openSalesModal(property) {
   document.getElementById('salesModalImage').src = BACKEND_URL + property.image;
   document.getElementById('salesModalTitle').innerText = property.title;
@@ -68,7 +69,7 @@ function closeSalesModal() {
   document.getElementById('salesModal').style.display = 'none';
 }
 
-// Event listeners
+// Attach event listeners
 document.getElementById('searchTitle').addEventListener('input', filterProperties);
 document.getElementById('minPrice').addEventListener('input', filterProperties);
 document.getElementById('maxPrice').addEventListener('input', filterProperties);
