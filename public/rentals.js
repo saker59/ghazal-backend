@@ -1,5 +1,5 @@
 const rentalContainer = document.getElementById('rentalProperties');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app";
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // ✅ no trailing slash
 
 // Fetch and render rental properties
 async function renderRentalProperties() {
@@ -7,9 +7,11 @@ async function renderRentalProperties() {
 
   try {
     const res = await fetch(`${BACKEND_URL}/properties?type=rental`);
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
     const rentalProperties = await res.json();
 
-    if (!Array.isArray(rentalProperties) || rentalProperties.length === 0) {
+    if (rentalProperties.length === 0) {
       rentalContainer.innerHTML = '<p style="text-align:center;">No rentals match your search.</p>';
       return;
     }
@@ -17,7 +19,7 @@ async function renderRentalProperties() {
     rentalProperties.forEach(property => {
       rentalContainer.innerHTML += `
         <div class="property-card" onclick='openModal(${JSON.stringify(property)})'>
-          <img src="${BACKEND_URL.replace(/\/$/, '')}${property.image}" />
+          <img src="${BACKEND_URL}${property.image}" alt="Property Image" />
           <h3>${property.title}</h3>
           <p><strong>Price:</strong> ${property.price} TND</p>
           <p>${property.description}</p>
@@ -30,7 +32,7 @@ async function renderRentalProperties() {
   }
 }
 
-// Filter properties by title & price (client-side)
+// Filter properties
 function filterProperties() {
   const titleQuery = document.getElementById('searchTitle').value.toLowerCase();
   const min = parseFloat(document.getElementById('minPrice').value) || 0;
@@ -49,6 +51,7 @@ function filterProperties() {
   });
 }
 
+// Reset filters
 function resetFilters() {
   document.getElementById('searchTitle').value = '';
   document.getElementById('minPrice').value = '';
@@ -56,7 +59,7 @@ function resetFilters() {
   renderRentalProperties();
 }
 
-// Modal functions
+// Modal
 function openModal(property) {
   document.getElementById('modalImage').src = BACKEND_URL + property.image;
   document.getElementById('modalTitle').innerText = property.title;
@@ -69,7 +72,7 @@ function closeModal() {
   document.getElementById('propertyModal').style.display = 'none';
 }
 
-// Attach event listeners
+// Event listeners
 document.getElementById('searchTitle').addEventListener('input', filterProperties);
 document.getElementById('minPrice').addEventListener('input', filterProperties);
 document.getElementById('maxPrice').addEventListener('input', filterProperties);
