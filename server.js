@@ -33,6 +33,15 @@ const upload = multer({ storage });
 const Property = require('./models/Property');
 
 // ===== API ROUTES =====
+// API ROUTES
+app.get('/properties', async (req, res) => {
+  // ... your DB query here
+});
+
+// ✅ Only use fallback for non-API requests
+app.get(/^\/(?!properties|uploads|login).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // GET all properties or filtered by type
 app.get('/properties', async (req, res) => {
