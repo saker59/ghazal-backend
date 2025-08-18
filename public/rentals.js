@@ -5,6 +5,15 @@ const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app/";
 async function renderRentalProperties() {
   rentalContainer.innerHTML = "";
 
+async function loadRentals() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/properties?type=rental`);
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error("❌ Error loading rentals:", err);
+  }
+}
   try {
     const res = await fetch(`${BACKEND_URL}/properties?type=rental`);
     const rentalProperties = await res.json();
