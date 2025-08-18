@@ -1,5 +1,5 @@
 const rentalContainer = document.getElementById('rentalProperties');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // ✅ no trailing slash
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app";
 
 // Fetch and render rental properties
 async function renderRentalProperties() {
@@ -17,7 +17,7 @@ async function renderRentalProperties() {
     rentalProperties.forEach(property => {
       rentalContainer.innerHTML += `
         <div class="property-card" onclick='openModal(${JSON.stringify(property)})'>
-          <img src="${BACKEND_URL}${property.image}" alt="Property image" />
+          <img src="${BACKEND_URL.replace(/\/$/, '')}${property.image}" />
           <h3>${property.title}</h3>
           <p><strong>Price:</strong> ${property.price} TND</p>
           <p>${property.description}</p>
