@@ -1,3 +1,4 @@
+// server.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -8,39 +9,35 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ===== MIDDLEWARE =====
-app.use(cors());
+/* -------------------- Middleware -------------------- */
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+
+// Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static frontend files
 
-// ===== MONGODB CONNECTION =====
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Connected to MongoDB"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+// Serve the static frontend (all files under /public)
+app.use(express.static(path.join(__dirname, 'public')));
 
-// ===== MULTER CONFIG =====
+/* -------------------- DB Connection -------------------- */
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
+
+/* -------------------- Multer (file uploads) -------------------- */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
 
-// ===== MODEL =====
+/* -------------------- Models -------------------- */
 const Property = require('./models/Property');
 
-// ===== API ROUTES =====
-// API ROUTES
-app.get('/properties', async (req, res) => {
-  // ... your DB query here
-});
+/* -------------------- API Routes -------------------- */
 
-// ✅ Only use fallback for non-API requests
-app.get(/^\/(?!properties|uploads|login).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// GET all properties or filtered by type
+// GET all properties (optional filter by type: /properties?type=rental|sale)
 app.get('/properties', async (req, res) => {
   try {
     const { type } = req.query;
@@ -48,11 +45,12 @@ app.get('/properties', async (req, res) => {
     const properties = await Property.find(query).sort({ createdAt: -1 });
     res.json(properties);
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to fetch properties" });
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to fetch properties' });
   }
 });
 
-// POST new property
+// POST a new property
 app.post('/properties', upload.single('image'), async (req, res) => {
   try {
     const { title, type, price, description, status } = req.body;
@@ -60,13 +58,15 @@ app.post('/properties', upload.single('image'), async (req, res) => {
 
     const property = new Property({ title, type, price, description, status, image });
     await property.save();
+
     res.json({ success: true, property });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to add property" });
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to add property' });
   }
 });
 
-// PUT update property
+// UPDATE a property
 app.put('/properties/:id', upload.single('image'), async (req, res) => {
   try {
     const { title, type, price, description, status } = req.body;
@@ -78,23 +78,24 @@ app.put('/properties/:id', upload.single('image'), async (req, res) => {
 
     const updated = await Property.findByIdAndUpdate(req.params.id, updates, { new: true });
     res.json({ success: true, property: updated });
-  } catch (err) {
-    console.error("PUT Error:", err);
-    res.status(500).json({ success: false, message: "Update failed" });
+  } catch (error) {
+    console.error('PUT Error:', error);
+    res.status(500).json({ success: false, message: 'Update failed' });
   }
 });
 
-// DELETE property
+// DELETE a property
 app.delete('/properties/:id', async (req, res) => {
   try {
     await Property.findByIdAndDelete(req.params.id);
     res.json({ success: true });
   } catch (error) {
-    res.status(500).json({ success: false, message: "Failed to delete property" });
+    console.error('DELETE Error:', error);
+    res.status(500).json({ success: false, message: 'Failed to delete property' });
   }
 });
 
-// ADMIN LOGIN
+// Simple admin login (hardcoded)
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const ADMIN_USERNAME = 'rania';
@@ -107,14 +108,13 @@ app.post('/login', (req, res) => {
   }
 });
 
-// ===== FRONTEND FALLBACK ROUTE (For direct links like /admin.html or /sales.html) =====
-// Serve frontend only for non-API and non-upload requests
-app.get(/^\/(?!api|uploads|properties|login).*/, (req, res) => {
+/* -------------------- Static Pages -------------------- */
+// Optional: ensure root serves index explicitly (static middleware already handles it)
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-
-// ===== START SERVER =====
+/* -------------------- Start Server -------------------- */
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
