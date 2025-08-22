@@ -1,14 +1,14 @@
 // admin.js
 const form = document.getElementById('propertyForm');
 const preview = document.getElementById('propertyPreview');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app/";
-let editingId = null; // Used to track if we're editing an existing property
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app";
+let editingId = null; // Track if we're editing
 
-// Submit form to backend (add or edit)
+// ===== Submit form (Add / Edit) =====
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  const confirmAdd = confirm("Are you sure you want to add this property?");
+  const confirmAdd = confirm(editingId ? "Are you sure you want to update this property?" : "Are you sure you want to add this property?");
   if (!confirmAdd) return;
 
   const formData = new FormData();
@@ -30,38 +30,34 @@ form.addEventListener('submit', async function (e) {
 
     const method = editingId ? 'PUT' : 'POST';
 
-    const res = await fetch(endpoint, {
-      method,
-      body: formData
-    });
-
+    const res = await fetch(endpoint, { method, body: formData });
     const result = await res.json();
 
     if (result.success) {
-     showToast("✅ Property added successfully!", "success");
+      showToast(editingId ? "✅ Property updated!" : "✅ Property added!", "success");
       form.reset();
       editingId = null;
       renderCards();
     } else {
-      showToast("❌ couldn't add property.", "error");
+      showToast("❌ Couldn't save property.", "error");
     }
   } catch (error) {
     console.error("❌ Error submitting form:", error);
     showToast("❌ Server error.", "error");
   }
 });
+
+// ===== Toast Notification =====
 function showToast(message, type = "success") {
   const toast = document.getElementById("toast");
   toast.textContent = message;
   toast.className = `toast ${type}`;
   toast.style.display = "block";
 
-  setTimeout(() => {
-    toast.style.display = "none";
-  }, 3000);
+  setTimeout(() => { toast.style.display = "none"; }, 3000);
 }
 
-// Render all properties
+// ===== Render Properties =====
 async function renderCards() {
   preview.innerHTML = "";
 
@@ -69,7 +65,7 @@ async function renderCards() {
     const res = await fetch(`${BACKEND_URL}/properties`);
     const properties = await res.json();
 
-    if (properties.length === 0) {
+    if (!properties || properties.length === 0) {
       preview.innerHTML = `<p>No properties yet.</p>`;
       return;
     }
@@ -77,10 +73,12 @@ async function renderCards() {
     properties.forEach((property) => {
       const statusText = property.status?.toUpperCase() || "N/A";
       const statusClass = property.status || "unknown";
+      const imgSrc = property.image ? `${BACKEND_URL}${property.image}` : "https://via.placeholder.com/300x200?text=No+Image";
 
       preview.innerHTML += `
         <div class="card">
-          <img src="${BACKEND_URL}${property.image}" alt="Property image" />
+          <img src="${imgSrc}" alt="Property image"
+            onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Image+Missing';" />
           <h3>${property.title}</h3>
           <p><strong>Type:</strong> ${property.type}</p>
           <p><strong>Price:</strong> ${property.price} TND</p>
@@ -98,22 +96,18 @@ async function renderCards() {
   }
 }
 
-// Delete property
+// ===== Delete Property =====
 async function deleteProperty(id) {
   if (!confirm("Are you sure you want to delete this property?")) return;
 
   try {
-    const res = await fetch(`${BACKEND_URL}/properties/${id}`, {
-      method: 'DELETE'
-    });
-
+    const res = await fetch(`${BACKEND_URL}/properties/${id}`, { method: 'DELETE' });
     const result = await res.json();
     if (result.success) {
-      alert("✅ Property deleted!");
+      showToast("✅ Property deleted!", "success");
       renderCards();
     } else {
       showToast("❌ Failed to delete.", "error");
-
     }
   } catch (err) {
     console.error(err);
@@ -121,7 +115,7 @@ async function deleteProperty(id) {
   }
 }
 
-// Load property into form for editing
+// ===== Edit Property =====
 async function editProperty(id) {
   try {
     const res = await fetch(`${BACKEND_URL}/properties`);
@@ -142,5 +136,5 @@ async function editProperty(id) {
   }
 }
 
-// Initial load
+// ===== Initial Load =====
 renderCards();

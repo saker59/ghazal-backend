@@ -1,33 +1,30 @@
-const loginForm = document.getElementById('loginForm');
-const errorMsg = document.getElementById('errorMsg');
-const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // Change if deployed
+// login.js
+const form = document.getElementById('loginForm');
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // ✅ Always Railway
 
-loginForm.addEventListener('submit', async (e) => {
+form.addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const username = document.getElementById('username').value.trim();
-  const password = document.getElementById('password').value;
+  const password = document.getElementById('password').value.trim();
 
   try {
     const res = await fetch(`${BACKEND_URL}/login`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
 
     const data = await res.json();
 
     if (res.ok && data.success) {
-      // Optionally: Save token if you're using JWT
-      localStorage.setItem('ghazal_admin_logged_in', 'true');
-      window.location.href = 'admin.html'; // redirect to admin dashboard
+      // ✅ Redirect to admin panel
+      window.location.href = "/admin.html";
     } else {
-      errorMsg.textContent = data.message || "Invalid credentials.";
+      alert("❌ Invalid username or password.");
     }
-  } catch (err) {
-    console.error(err);
-    errorMsg.textContent = "❌ Server error. Try again.";
+  } catch (error) {
+    console.error("❌ Login error:", error);
+    alert("❌ Server error. Please try again later.");
   }
 });
