@@ -19,11 +19,11 @@ app.get('/rentals.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'rentals.html'));
 });
 
-app.get('/sales.html', (req, res) => {
+app.get('sales.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'sales.html'));
 });
 
-app.get('/construction.html', (req, res) => {
+app.get('construction.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'construction.html'));
 });
 
