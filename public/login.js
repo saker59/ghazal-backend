@@ -1,6 +1,6 @@
 const loginForm = document.getElementById('loginForm');
 const errorMsg = document.getElementById('errorMsg');
-const BACKEND_URL = "http://localhost:5000"; // Change if deployed
+const BACKEND_URL = "https://petit-ghazal-production-e0f6.up.railway.app"; // Change if deployed
 
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
